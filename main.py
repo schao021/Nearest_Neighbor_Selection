@@ -25,11 +25,38 @@ def forward_selection(data):
                 best_feature = list(current_set_of_features)
         print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}")
 
+def backward_selection(data):
+    current_set_of_features = list(range(1,data.shape[1]))
+    best_feature = []
+    best_accuracy_total = 0.0
+    print("Beggining search")
+    while len(current_set_of_features) > 0:
+        print(f"On level {len(current_set_of_features)} of the search tree")
+        feature_to_remove_at_this_level = None
+        best_accuracy_so_far = 0
+        for k in current_set_of_features:
+            print(f'--Considering removing the {k} feature')
+            remaining_features = [f for f in current_set_of_features if f != k]
+            accuracy = leave_one_out_cross_validation(data, remaining_features, None)
+            print(f'----Accuracy with feature {k} removed: {(accuracy * 100):.1f}%')
+            if accuracy > best_accuracy_so_far:
+                best_accuracy_so_far = accuracy
+                feature_to_remove_at_this_level = k
+        if feature_to_remove_at_this_level is not None:
+            current_set_of_features.remove(feature_to_remove_at_this_level)
+            print(f"On level {len(current_set_of_features)} I removed feature {feature_to_remove_at_this_level} from the set")
+            if best_accuracy_so_far > best_accuracy_total:
+                best_accuracy_total = best_accuracy_so_far
+                best_feature = list(current_set_of_features)
+        
+        print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}%")   
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
     number_correctly_classified = 0
-    selected_features = list(current_set) + [feature_to_add]
+    selected_features = list(current_set)
+    if feature_to_add is not None:
+        selected_features.append(feature_to_add)
     masked_data = np.zeros_like(data)
     masked_data[:, 0] = data[:, 0]
     masked_data[:, selected_features] = data[:, selected_features]
@@ -55,6 +82,6 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 def main():
     data = np.loadtxt('CS170_Small_Data__1.txt')
     forward_selection(data)
-    # leave_one_out_cross_validation(data)
+    # backward_selection(data)
 
 main()
