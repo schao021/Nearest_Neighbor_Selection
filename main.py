@@ -1,6 +1,6 @@
 import numpy as np
 
-def feature_search_demo(data):
+def forward_selection(data):
     current_set_of_features = []
     best_feature = []
     best_accuracy_total = 0.0
@@ -54,7 +54,7 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 
 def main():
     data = np.loadtxt('CS170_Small_Data__1.txt')
-    feature_search_demo(data)
+    forward_selection(data)
     # leave_one_out_cross_validation(data)
 
 main()
