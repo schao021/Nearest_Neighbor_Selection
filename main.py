@@ -91,7 +91,7 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 
 def main():
     # data = np.loadtxt('CS170_Small_Data__1.txt')
-    data = np.loadtxt('CS170_Large_Data__12.txt')
+    data = np.loadtxt('CS170_Large_Data__17.txt')
     # forward_selection(data)
     backward_selection(data)
 
