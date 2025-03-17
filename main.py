@@ -1,6 +1,8 @@
 import numpy as np
+import time
 
 def forward_selection(data):
+    start_time = time.time()
     current_set_of_features = []
     best_feature = []
     best_accuracy_total = 0.0
@@ -24,8 +26,13 @@ def forward_selection(data):
                 best_accuracy_total = best_accuracy_so_far
                 best_feature = list(current_set_of_features)
         print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}")
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours.")
+
 
 def backward_selection(data):
+    start_time = time.time()
     current_set_of_features = list(range(1,data.shape[1]))
     best_feature = []
     best_accuracy_total = 0.0
@@ -50,6 +57,9 @@ def backward_selection(data):
                 best_feature = list(current_set_of_features)
         
         print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}%")   
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours.")
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
@@ -80,8 +90,9 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 
 
 def main():
-    data = np.loadtxt('CS170_Small_Data__1.txt')
-    forward_selection(data)
-    # backward_selection(data)
+    # data = np.loadtxt('CS170_Small_Data__1.txt')
+    data = np.loadtxt('CS170_Large_Data__12.txt')
+    # forward_selection(data)
+    backward_selection(data)
 
 main()
