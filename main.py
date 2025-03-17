@@ -2,6 +2,9 @@ import numpy as np
 
 def feature_search_demo(data):
     current_set_of_features = []
+    best_feature = []
+    best_accuracy_total = 0.0
+    print("Beggining search")
     for i in range(1, data.shape[1]):
         print(f"On the {i}th level of the search tree")
         feature_to_add_at_this_level = None
@@ -10,13 +13,18 @@ def feature_search_demo(data):
             if (k not in current_set_of_features):
                 print(f'--Considering adding the {k} feature')
                 accuracy = leave_one_out_cross_validation(data, current_set_of_features, k)
+                print(f'----Accuracy with feature {k}: {(accuracy * 100):.1f}%')
                 if accuracy > best_accuracy_so_far:
                     best_accuracy_so_far = accuracy
                     feature_to_add_at_this_level = k
         if feature_to_add_at_this_level is not None:
             current_set_of_features.append(feature_to_add_at_this_level)
             print(f"On level {i} i added feature {feature_to_add_at_this_level} to current set")
-    print(current_set_of_features)
+            if best_accuracy_so_far > best_accuracy_total:
+                best_accuracy_total = best_accuracy_so_far
+                best_feature = list(current_set_of_features)
+        print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}")
+
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
