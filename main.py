@@ -91,8 +91,37 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 
 def main():
     # data = np.loadtxt('CS170_Small_Data__1.txt')
-    data = np.loadtxt('CS170_Large_Data__17.txt')
+    # data = np.loadtxt('CS170_Large_Data__17.txt')
     # forward_selection(data)
-    backward_selection(data)
+    # backward_selection(data)
+    validMenuOption = False
+    while (validMenuOption != True):
+        print("Welcome to Simon Chao's Feature Selection Algorithm")
+        data_name = input("Type in the name of the file to test\n")
+        data = np.loadtxt(data_name)
+        data_feature = data.shape[1] - 1
+        data_instance = data.shape[0]
+        feature_indices = list(range(1,data.shape[1]))
+        nearest_neighbor_accuracy = leave_one_out_cross_validation(data,feature_indices, None)
+        validNumOption = False
+        while (validNumOption != True):
+            print("Type the number of the algorithm you want to run.")
+            print("1. Forward Selection")
+            print("2. Backward Elimination") 
+            option = input()
+            if option == "1":
+                print(f"This dataset has {data_feature} features (not including the class attribute), with {data_instance} instances.")
+                print(f"Running nearest neighbor with all {data_feature} features, using leaving-one-out evaluation, I get an accuracy of {(nearest_neighbor_accuracy*100):.1f}%")
+                forward_selection(data)
+                validMenuOption = True
+                validMenuOption = True
+            elif option == '2':
+                print(f"This dataset has {data_feature} features (not including the class attribute), with {data_instance} instances.")
+                print(f"Running nearest neighbor with all {data_feature} features, using leaving-one-out evaluation, I get an accuracy of {(nearest_neighbor_accuracy*100):.1f}%")
+                backward_selection(data)
+                validMenuOption = True
+                validNumOption = True
+            else:
+                print("Please select a valid option")
 
 main()
