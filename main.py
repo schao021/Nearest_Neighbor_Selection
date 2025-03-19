@@ -6,28 +6,28 @@ def forward_selection(data):
     current_set_of_features = []
     best_feature = []
     best_accuracy_total = 0.0
-    print("Beggining search")
+    print("Beginning search")
     for i in range(1, data.shape[1]):
-        print(f"On the {i}th level of the search tree")
         feature_to_add_at_this_level = None
         best_accuracy_so_far = 0
         for k in range(1, data.shape[1]):
             if (k not in current_set_of_features):
-                print(f'--Considering adding the {k} feature')
                 accuracy = leave_one_out_cross_validation(data, current_set_of_features, k)
-                print(f'----Accuracy with feature {k}: {(accuracy * 100):.1f}%')
+                print(f"  Using feature(s) {{{', '.join(map(str, current_set_of_features + [k]))}}} accuracy is {(accuracy * 100):.1f}%")                
                 if accuracy > best_accuracy_so_far:
                     best_accuracy_so_far = accuracy
                     feature_to_add_at_this_level = k
         if feature_to_add_at_this_level is not None:
             current_set_of_features.append(feature_to_add_at_this_level)
-            print(f"On level {i} i added feature {feature_to_add_at_this_level} to current set")
             if best_accuracy_so_far > best_accuracy_total:
                 best_accuracy_total = best_accuracy_so_far
                 best_feature = list(current_set_of_features)
-        print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}")
+        if (best_accuracy_so_far < best_accuracy_total):
+            print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
+        print(f"Feature set {best_feature} was best, accuracy is {(best_accuracy_total * 100):.1f}%")
     end_time = time.time()
     elapsed_time = end_time - start_time
+    print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
     print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours.")
 
 
@@ -36,29 +36,28 @@ def backward_selection(data):
     current_set_of_features = list(range(1,data.shape[1]))
     best_feature = []
     best_accuracy_total = 0.0
-    print("Beggining search")
+    print("Beginning search")
     while len(current_set_of_features) > 0:
-        print(f"On level {len(current_set_of_features)} of the search tree")
         feature_to_remove_at_this_level = None
         best_accuracy_so_far = 0
         for k in current_set_of_features:
-            print(f'--Considering removing the {k} feature')
             remaining_features = [f for f in current_set_of_features if f != k]
             accuracy = leave_one_out_cross_validation(data, remaining_features, None)
-            print(f'----Accuracy with feature {k} removed: {(accuracy * 100):.1f}%')
+            print(f"  Using feature(s) {{{', '.join(map(str, remaining_features))}}} accuracy is {(accuracy * 100):.1f}%")
             if accuracy > best_accuracy_so_far:
                 best_accuracy_so_far = accuracy
                 feature_to_remove_at_this_level = k
         if feature_to_remove_at_this_level is not None:
             current_set_of_features.remove(feature_to_remove_at_this_level)
-            print(f"On level {len(current_set_of_features)} I removed feature {feature_to_remove_at_this_level} from the set")
             if best_accuracy_so_far > best_accuracy_total:
                 best_accuracy_total = best_accuracy_so_far
                 best_feature = list(current_set_of_features)
-        
-        print(f"Best feature subset found: {best_feature} with accuracy: {(best_accuracy_total * 100):.1f}%")   
+        if best_accuracy_so_far < best_accuracy_total:
+            print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
+        print(f"Feature set {best_feature} was best, accuracy is {(best_accuracy_total * 100):.1f}%")
     end_time = time.time()
     elapsed_time = end_time - start_time
+    print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
     print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours.")
 
 
@@ -90,10 +89,6 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
 
 
 def main():
-    # data = np.loadtxt('CS170_Small_Data__1.txt')
-    # data = np.loadtxt('CS170_Large_Data__17.txt')
-    # forward_selection(data)
-    # backward_selection(data)
     validMenuOption = False
     while (validMenuOption != True):
         print("Welcome to Simon Chao's Feature Selection Algorithm")
@@ -114,7 +109,7 @@ def main():
                 print(f"Running nearest neighbor with all {data_feature} features, using leaving-one-out evaluation, I get an accuracy of {(nearest_neighbor_accuracy*100):.1f}%")
                 forward_selection(data)
                 validMenuOption = True
-                validMenuOption = True
+                validNumOption = True
             elif option == '2':
                 print(f"This dataset has {data_feature} features (not including the class attribute), with {data_instance} instances.")
                 print(f"Running nearest neighbor with all {data_feature} features, using leaving-one-out evaluation, I get an accuracy of {(nearest_neighbor_accuracy*100):.1f}%")
