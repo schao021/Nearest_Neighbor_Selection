@@ -24,11 +24,11 @@ def forward_selection(data):
                 best_feature = list(current_set_of_features)
         if (best_accuracy_so_far < best_accuracy_total):
             print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
-        print(f"Feature set {best_feature} was best, accuracy is {(best_accuracy_total * 100):.1f}%")
+        print(f"Feature set {current_set_of_features} was best, accuracy is {(best_accuracy_so_far * 100):.1f}%")
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
-    print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours.")
+    print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours or {elapsed_time/60:.1f} minutes.")
 
 
 def backward_selection(data):
@@ -54,11 +54,11 @@ def backward_selection(data):
                 best_feature = list(current_set_of_features)
         if best_accuracy_so_far < best_accuracy_total:
             print("(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
-        print(f"Feature set {best_feature} was best, accuracy is {(best_accuracy_total * 100):.1f}%")
+        print(f"Feature set {current_set_of_features} was best, accuracy is {(best_accuracy_so_far * 100):.1f}%")
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
-    print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours.")
+    print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours, or {elapsed_time/60:.1f} minutes.")
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
