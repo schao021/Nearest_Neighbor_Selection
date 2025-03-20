@@ -28,7 +28,8 @@ def forward_selection(data):
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
-    print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours or {elapsed_time/60:.1f} minutes.")
+    # commented out, used to keep track of time
+    # print(f"Forward Selection completed in {elapsed_time / 3600:.2f} hours or {elapsed_time/60:.1f} minutes.")
 
 
 def backward_selection(data):
@@ -58,7 +59,8 @@ def backward_selection(data):
     end_time = time.time()
     elapsed_time = end_time - start_time
     print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
-    print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours, or {elapsed_time/60:.1f} minutes.")
+    # commented out, used to keep track of time
+    # print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours, or {elapsed_time/60:.1f} minutes.")
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
@@ -66,11 +68,6 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
     selected_features = list(current_set)
     if feature_to_add is not None:
         selected_features.append(feature_to_add)
-
-    if len(selected_features) == 0:
-        labels, counts = np.unique(data[:, 0], return_counts=True)
-        default_rate = max(counts) / sum(counts)
-        return default_rate
     
     masked_data = np.zeros_like(data)
     masked_data[:, 0] = data[:, 0]
