@@ -66,6 +66,12 @@ def leave_one_out_cross_validation(data, current_set, feature_to_add):
     selected_features = list(current_set)
     if feature_to_add is not None:
         selected_features.append(feature_to_add)
+
+    if len(selected_features) == 0:
+        labels, counts = np.unique(data[:, 0], return_counts=True)
+        default_rate = max(counts) / sum(counts)
+        return default_rate
+    
     masked_data = np.zeros_like(data)
     masked_data[:, 0] = data[:, 0]
     masked_data[:, selected_features] = data[:, selected_features]
