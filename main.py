@@ -60,7 +60,7 @@ def backward_selection(data):
     elapsed_time = end_time - start_time
     print(f"Finished search!! The best feature subset is {best_feature}, which has an accuracy of {(best_accuracy_total*100):.1f}%")
     # commented out, used to keep track of time
-    # print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours, or {elapsed_time/60:.1f} minutes.")
+    print(f"Backward Elimination completed in {elapsed_time / 3600:.2f} hours, or {elapsed_time/60:.1f} minutes.")
 
 
 def leave_one_out_cross_validation(data, current_set, feature_to_add):
