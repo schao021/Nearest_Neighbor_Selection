@@ -3,6 +3,21 @@
 ## Introduction
 This project focuses on implementing a nearest neighbor classifier within a wrapper method to perform feature selection. The core objective is to identify the most relevant features in a dataset to improve classification accuracy and reduce comuptational complexity. Two popular approaches are evaluated: forward selecrtion and backward elimination.
 
+## Features
+- Implementation of Forward Selection and Backward Elimination
+- Uses Leave-One-Out Cross-Validation (LOOCV) for accuracy evaluation
+- Compatible with custom `.txt` datasets
+- Tracks and displays accuracy at each feature set selection step
+- Runtime tracking for small and large datasets
+
+## Tools Used
+
+- **Python 3.12** — Main programming language
+- **NumPy** — Efficient numerical operations
+- **Excel** — For data analysis and visualization
+- **VSCode** — Development environment
+- **GitHub** — Version control and project hosting
+
 ## Forward Selection vs Backward Elimination
 ### Forward Selection
 This method begins with an empty feature set and adds one feature at a time, selecting the one that improves the model's performance the most at each step. The process continues until no further improvement is observed. This greedy strategy is effective in detecting strong individual features and avoids early inclusion of noisy data.
@@ -105,3 +120,10 @@ Finished search!! The best feature subset is [5, 3], which has an accuracy of 96
 * Smaller datasets: Both methods performed similarly, accurately identifying {3, 5} as the best feature combination.
 * Larger datasets: Forward selection was more reliable. It reached 95.2% accuracy, compared to 85.8% for backward elimination, which likely got stuck in a local maximum.
 * Overall: Forward selection appears to be a safer and more consistent option for datasets with a large number of features.
+
+## What I Learned
+Working on this project gave me a much deeper understanding of how feature selection impacts classification performance. Some key takeaways:
+- **Feature selection matters** — Removing irrelevant or redundant features significantly boosts accuracy and efficiency.
+- **LOOCV is accurate but costly** — Especially with large feature sets, LOOCV can be slow, which is important to account for in real-world scenarios.
+- **Backtracking logic is subtle** — Implementing feature selection algorithms helped me understand greedy heuristics better and how they can be both powerful and limited.
+- **Debugging numerical results** — Validating accuracy outputs taught me how sensitive classification results are to data scaling and distance metrics.
