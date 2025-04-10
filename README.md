@@ -16,12 +16,16 @@ Conversely, this method starts with all available features and removes one at a 
 * Adding Feature 3 next increased accuracy to 96%
 * Adding more features after that led to a decline in performance
 * Best feature subset: {3, 5}, achieving 96% accuracy
+
+![Small Dataset Forward Selection](Images/Small_Data_Forward.png)
 ### Backward Elimination
 * Starting with all features: 80.6% accuracy
 * Removing Feature 6 boosted accuracy to 88.6%
 * Further removals (2, then 1, then 4) improved it to 96%
 * Removing either 3 or 5 caused significant drops in accuracy
 * Again, {3, 5} emerged as the optimal subset
+
+![Small Dataset Backward Elimination](Images/Small_Data_Backward.png)
 
 ## Large Dataset Results (40 Features, 1000 Instances)
 ### Forward Selection
@@ -30,12 +34,17 @@ Conversely, this method starts with all available features and removes one at a 
 * Adding Feature 10: up to 95.2%
 * Performence declined slightly after adding more subsets
 * Best subset: {34, 10}, achieving 95.2% accuracy
+
+![Large Dataset Forward Selection](Images/Large_Data_Forward.png)
+
 ### Backward Elimination
 * Initial accuracy: 68.6%
 * Removing irrelevant features gradually improved accuracy
 * Peak accuracy at 85.8% with features {26, 31}
 * Removing 26 dropped accuracy back to the default
 * Feature 26 consistently appeared among the most useful, but the method failed to identify Feature 34, which was key in forward selection
+
+![Large Dataset Backward Elimination](Images/Large_Data_Backward.png)
 
 ## Sample Output for Small Dataset
 ``` python
